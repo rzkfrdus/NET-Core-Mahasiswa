@@ -54,7 +54,8 @@ namespace MahasiswaWEBAPI.Controllers
         [Route("mahasiswa")]
         public JsonResult Put(Mahasiswa mhs)
         {
-            string query = @"update mhs set Nama=@Nama, Fakultas=@Fakultas, Jurusan=@Jurusan, PhotoFile=@PhotoFile";
+            string query = @"update mhs set Nama=@Nama, Fakultas=@Fakultas, Jurusan=@Jurusan, PhotoFile=@PhotoFile
+                            where Mhs=@Mhs";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("mahasiswaConn");
@@ -64,7 +65,7 @@ namespace MahasiswaWEBAPI.Controllers
                 myconn.Open();
                 using (MySqlCommand myCommand = new MySqlCommand(query, myconn))
                 {
-                    myCommand.Parameters.AddWithValue("@Npm", mhs.Npm);
+                    myCommand.Parameters.AddWithValue("@Mhs", mhs.Mhs);
                     myCommand.Parameters.AddWithValue("@Nama", mhs.Nama);
                     myCommand.Parameters.AddWithValue("@Fakultas", mhs.Fakultas);
                     myCommand.Parameters.AddWithValue("@Jurusan", mhs.Jurusan);
@@ -111,7 +112,7 @@ namespace MahasiswaWEBAPI.Controllers
         [Route("mahasiswa/{id}")]
         public JsonResult Delete(int id)
         {
-            string query = @"delete from mhs where Npm=@Npm;";
+            string query = @"delete from mhs where Mhs=@Mhs;";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("mahasiswaConn");
@@ -121,7 +122,7 @@ namespace MahasiswaWEBAPI.Controllers
                 myconn.Open();
                 using (MySqlCommand myCommand = new MySqlCommand(query, myconn))
                 {
-                    myCommand.Parameters.AddWithValue("@Npm", id);
+                    myCommand.Parameters.AddWithValue("@Mhs", id);
                     myReader = myCommand.ExecuteReader();
                     table.Load(myReader);
 
@@ -131,7 +132,7 @@ namespace MahasiswaWEBAPI.Controllers
             }
             return new JsonResult("Berhasil Delete Data Mahasiswa");
         }
-
+     
         [HttpPost]
         [Route("mahasiswa/savepicture")]
         public JsonResult SavePic()

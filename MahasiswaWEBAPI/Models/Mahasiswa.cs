@@ -7,7 +7,7 @@ namespace MahasiswaWEBAPI.Models
 {
     public class Mahasiswa
     {
-        public int Npm { get; set; }
+        public int Mhs { get; set; }
         public string Nama { get; set; }
         public string Fakultas { get; set; }
         public string Jurusan { get; set; }
